@@ -1,11 +1,11 @@
-//! DS13 constrained road following.
+//! prototype constrained road following.
 //!
-//! Kinematic surface following on top of the DS11 fixed-step motion and the
-//! DS12 nearby-height query. This is **not** a physics model: there is no
+//! Kinematic surface following on top of the prototype fixed-step motion and the
+//! prototype nearby-height query. This is **not** a physics model: there is no
 //! suspension, gravity, tire contact, barrier or original-handling parity. The
 //! rules here are the coordinator prototype choices from `specs/ROAD_FOLLOW.md`.
 //!
-//! Each fixed step proposes the ordinary DS11 step, queries the nearby surface
+//! Each fixed step proposes the ordinary prototype step, queries the nearby surface
 //! under the proposed rear axle using the **last accepted height** as the
 //! reference, and either accepts the planar pose and surface atomically or
 //! latches a distinct surface-lost state. Everything is headless and in f64.
@@ -199,7 +199,7 @@ pub struct RoadFollower {
 impl RoadFollower {
     /// Select the spawn surface and build the initial follower state.
     ///
-    /// Queries the DS11 spawn rear-axle X/Z with the grid Y reference and the
+    /// Queries the prototype spawn rear-axle X/Z with the grid Y reference and the
     /// [`SURFACE_BAND`] distance, requires a hit, and initializes the reference
     /// to that hit height rather than the grid Y.
     pub fn new(set: &GroundQuerySet, sim: &Sim) -> Result<Self, FollowError> {

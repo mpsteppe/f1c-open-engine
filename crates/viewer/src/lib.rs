@@ -99,7 +99,7 @@ pub fn sky_instance_indices(scene: &Scene) -> Vec<usize> {
     indices
 }
 
-/// Resolved DS12 ground query set plus selection counts for reporting.
+/// Resolved prototype ground query set plus selection counts for reporting.
 pub struct GroundBuild {
     /// Built query set of retained selected triangles.
     pub set: GroundQuerySet,
@@ -121,7 +121,7 @@ pub fn resolve_grid(scn_path: &Path, grid: u32) -> Option<([f32; 3], [f32; 3])> 
         .map(|slot| (slot.pos, slot.ori))
 }
 
-/// How the DS12 selection rule treats one mesh occurrence.
+/// How the prototype selection rule treats one mesh occurrence.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum MeshSelection {
     /// Explicit `HATTarget=True` in a supported context.
@@ -132,7 +132,7 @@ pub enum MeshSelection {
     Unsupported,
 }
 
-/// Classify one occurrence under the conservative DS12 selection rule.
+/// Classify one occurrence under the conservative prototype selection rule.
 ///
 /// `Render` is deliberately not a parameter: a hidden (`Render=False`) mesh is
 /// still selected. `CollTarget` is deliberately not a parameter either; only an
@@ -154,9 +154,9 @@ pub fn classify_mesh(
     }
 }
 
-/// Build the DS12 ground query set from the selected scene meshes.
+/// Build the prototype ground query set from the selected scene meshes.
 ///
-/// Selection is the conservative DS12 prototype rule: an explicit
+/// Selection is the conservative prototype prototype rule: an explicit
 /// `HATTarget=True` on a top-level, non-moveable, non-animated, non-sky mesh
 /// occurrence. `Render=False` does not exclude a selected mesh; `CollTarget`
 /// alone never selects one. A selected occurrence in an unsupported context
@@ -271,7 +271,7 @@ fn load_ground_mesh(
     })
 }
 
-/// How the DS14 barrier selection rule treats one mesh occurrence.
+/// How the prototype barrier selection rule treats one mesh occurrence.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum BarrierSelection {
     /// Explicit `CollTarget=True` on a visible, supported instance.
@@ -283,7 +283,7 @@ pub enum BarrierSelection {
     Unsupported,
 }
 
-/// Classify one occurrence under the conservative DS14 barrier rule.
+/// Classify one occurrence under the conservative prototype barrier rule.
 ///
 /// Only an explicit `CollTarget=True` on a `Render=True` occurrence selects.
 /// `HATTarget` is deliberately not a parameter: a HAT-only mesh never selects.
@@ -306,7 +306,7 @@ pub fn classify_barrier(
     }
 }
 
-/// Resolved DS14 barrier set plus selection counts for reporting.
+/// Resolved prototype barrier set plus selection counts for reporting.
 pub struct BarrierBuild {
     /// Built set of retained steep barrier triangles.
     pub set: BarrierSet,
@@ -318,7 +318,7 @@ pub struct BarrierBuild {
     pub unsupported: usize,
 }
 
-/// Build the DS14 barrier set from the selected scene meshes.
+/// Build the prototype barrier set from the selected scene meshes.
 ///
 /// Selection is explicit `CollTarget=True` on a visible (`Render=True`),
 /// top-level, non-moveable, non-animated, non-sky mesh occurrence. `HATTarget`
@@ -486,7 +486,7 @@ pub fn bounds(submeshes: &[SubMesh]) -> Option<Bounds> {
 /// [`mts_to_submeshes_at`]). Positions are un-mirrored back to game axes,
 /// rotated by `Rz * Rx * Ry` (Y first, `yaw_sign` flips the yaw), translated
 /// by `pos`, lifted so the lowest vertex touches `pos[1]`, and mirrored again.
-/// Normals are rotated but not translated. See the DS08 handoff for the rule.
+/// Normals are rotated but not translated. See the prototype handoff for the rule.
 pub fn place_car(submeshes: &mut [SubMesh], pos: [f32; 3], ori: [f32; 3], yaw_sign: f32) {
     let orientation = [ori[0], ori[1] * yaw_sign, ori[2]];
     let rotation = placement_rotation(orientation);
@@ -547,7 +547,7 @@ pub fn car_local(submeshes: &mut [SubMesh]) {
     }
 }
 
-/// Viewer-space placement of a DS13 road-follow pose.
+/// Viewer-space placement of a prototype road-follow pose.
 ///
 /// Game axes go in; the fields are the mesh translation and the three local
 /// axes of a rotation matrix, already reflected by negating Z exactly once.

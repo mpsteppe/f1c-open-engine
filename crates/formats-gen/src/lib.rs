@@ -1,5 +1,5 @@
 //! Parser for the gMotor `.veh` / `.gen` vehicle graphics configuration
-//! (behaviour described in `handoffs/DS05_HANDOFF_gen_search_path_2026-10-06.md`).
+//! (behaviour described in the format specifications).
 //!
 //! Both files are plain text; the caller decodes the bytes (Latin-1) and hands
 //! the parser a `&str`. Keys are case-insensitive and a trailing `//` comment

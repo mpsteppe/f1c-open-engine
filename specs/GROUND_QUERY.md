@@ -1,13 +1,12 @@
-# Ground queries v1 — DS12 contract
+# Ground queries v1 — prototype contract
 
-**Next action:** implement this contract via the DS12 handoff. This is the first M05 foundation slice.
 
 ## Goal and evidence
 
 - **Goal:** identify nearby static road-height triangles and query their height beneath a moving car. Headless geometry first; opt-in diagnostic HUD second.
-- **Evidence:** [research record](../records/research/GROUND_QUERY_2026-10-06.md). Registered Adelaide SCN has mesh-line HATTarget and CollTarget flags. Their existence is observed; original-engine selection/default semantics are not validated.
+- **Evidence:** maintainer research notes. Registered Adelaide SCN has mesh-line HATTarget and CollTarget flags. Their existence is observed; original-engine selection/default semantics are not validated.
 - **Design:** all selection rules, tolerances and query limits here are coordinator prototype choices. No original collision/handling claim.
-- **Deferred:** changing car Y/pitch/roll, gravity, airborne motion, suspension, surface grip/TDF, barriers, tire contact and lap timing. DS11 motion remains unchanged.
+- **Deferred:** changing car Y/pitch/roll, gravity, airborne motion, suspension, surface grip/TDF, barriers, tire contact and lap timing. prototype motion remains unchanged.
 
 ## SCN metadata
 
@@ -24,7 +23,7 @@
 - Query independently of render visibility/material/texture state. Share decoded MTS data when useful, but a hidden selected mesh must still load. Do not retain original file bytes or extracted assets in the repository.
 - Convert viewer mirrored geometry back by negating Z exactly once if using it as input; test that adapter. Do not use material normals as geometric normals.
 - Reject non-finite vertices and out-of-range indices with named errors. Ignore/count degenerate triangles whose absolute XZ projected cross product is <= 1e-10 square metres. Ignore/count faces with upward geometric unit-normal Y < 0.5 (steeper than 60 degrees). Normalize winding so geometric normals point upward; reversed winding remains queryable.
-- No partially hidden failures: opted-in ground probing fails before window creation on a missing/unreadable/unsupported selected mesh, invalid geometry, unsupported selected nested/moving/animated geometry, or zero retained triangles. Name the affected mesh and fix. Ordinary DS11/static modes retain their current behavior.
+- No partially hidden failures: opted-in ground probing fails before window creation on a missing/unreadable/unsupported selected mesh, invalid geometry, unsupported selected nested/moving/animated geometry, or zero retained triangles. Name the affected mesh and fix. Ordinary prototype/static modes retain their current behavior.
 
 ## Height query
 
@@ -36,7 +35,7 @@
 
 ## Viewer diagnostic integration
 
-- New **--ground-probe** requires track SCN, --car and --drive. Reject invalid combinations before opening. Without it, DS11 behavior and HUD label remain the same.
+- New **--ground-probe** requires track SCN, --car and --drive. Reject invalid combinations before opening. Without it, prototype behavior and HUD label remain the same.
 - Build the query set during preflight from selected meshes through existing registered runtime loading. Print selected/excluded/unsupported mesh counts and retained/rejected triangle counts once.
 - Query at the current simulation **rear-axle X/Z**, using fixed grid Y as reference and a 2 m maximum vertical distance. Preflight must have a hit at the selected spawn rear axle; otherwise fail with "No nearby surface at grid; choose another grid or use flat drive without --ground-probe".
 - HUD adds "Ground probe only — car stays on flat plane", hit height in metres, grid-to-surface height difference in metres, source mesh, and candidate count; or "No nearby surface" when driving out of coverage. No per-frame console spam.
@@ -55,4 +54,4 @@ One triangle has vertices (0,1,0), (4,3,0), (0,1,4), all in metres. Query (X=1,Z
 - **Layers:** two overlapping horizontal triangles at Y=1 and 5. Ref=1.2/max=2 selects 1; ref=4.8 selects 5; ref=3/max=2 selects lower 1; max=1 at ref=3 returns None. Stable-ID tie test for duplicates.
 - **Index:** indexed results equal brute-force reference on invented varied triangles/points. A separated synthetic grid shows localized query candidate count smaller than total, including a large triangle and extreme finite coordinates without runaway allocation.
 - **Runtime:** configured Adelaide/Ferrari/grid 0 probe must actually load selected surfaces and return a spawn hit. Report counts, source, height/reference/difference/normal with units. This is sampled geometry evidence, not original physics. If the sample fails, report the blocker; do not expand the height band or replace flags with name guesses.
-- **Regression:** fmt, clippy -D warnings, workspace tests and release viewer build pass. DS11 oracle/session checks stay green. Owner checks probe HUD, short drive, pause/reset and texture/light toggles after code review; no approval inferred from launching.
+- **Regression:** fmt, clippy -D warnings, workspace tests and release viewer build pass. prototype oracle/session checks stay green. Owner checks probe HUD, short drive, pause/reset and texture/light toggles after code review; no approval inferred from launching.

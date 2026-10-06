@@ -2,7 +2,7 @@
 
 Format notes for the text files a car uses for physics. Everything here is read
 from the player's game folder at run time and never committed. Parsing only;
-the values are not simulated yet (that is DS11).
+the values are not simulated yet (that is prototype).
 
 Provenance: observed 2026-10-06 from the files named under each heading in the
 clean reference install. No decompile was used.

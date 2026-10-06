@@ -116,14 +116,14 @@ struct DriveRuntime {
     session: Session,
 }
 
-/// The DS12 ground query set and fixed reference height for `--ground-probe`.
+/// The prototype ground query set and fixed reference height for `--ground-probe`.
 #[derive(Resource)]
 struct GroundProbe {
     set: GroundQuerySet,
     reference_y: f64,
 }
 
-/// The DS13 ground query set used by the per-step road follower.
+/// The prototype ground query set used by the per-step road follower.
 #[derive(Resource)]
 struct RoadFollowMap {
     set: GroundQuerySet,
@@ -768,7 +768,7 @@ fn run_track(
         .map(|bounds| (Vec3::from(bounds.max) - Vec3::from(bounds.min)).length() * 0.5)
         .unwrap_or(100.0)
         .max(10.0);
-    // DS07 camera start, also the fallback car spot when no grid slot exists.
+    // prototype camera start, also the fallback car spot when no grid slot exists.
     let ds07_position = target + Vec3::new(0.0, radius * 1.2, radius * 0.6);
     let ds07_look = (target - ds07_position).normalize_or_zero();
     let mut position = ds07_position;
@@ -793,7 +793,7 @@ fn run_track(
                     Some((pos, ori)) => (pos, ori, true),
                     None => {
                         println!(
-                            "No grid {grid} in {}; placing car at the DS07 camera start",
+                            "No grid {grid} in {}; placing car at the prototype camera start",
                             file_name(&scn_path.with_extension("aiw"))
                         );
                         (ds07_position.to_array(), [0.0, 0.0, 0.0], false)

@@ -1,4 +1,4 @@
-//! Headless DS11 driving prototype.
+//! Headless prototype driving prototype.
 //!
 //! [`CarSpec::from_physics`] validates a loaded `formats-hdv` car, [`Sim`] runs
 //! the fixed-step motion and [`Session`] owns the input queue and pause state.

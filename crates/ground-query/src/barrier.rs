@@ -1,12 +1,12 @@
 //! Headless barrier geometry and a swept-sphere query.
 //!
-//! This is the DS14 prototype from `specs/BARRIER_STOP.md`. It is **not** a
+//! This is the prototype prototype from `specs/BARRIER_STOP.md`. It is **not** a
 //! reconstruction of the original collision model: the selection rule (visible
 //! explicit `CollTarget=True`, steep faces), the proxy sphere and the swept
 //! query are project choices.
 //!
 //! Geometry is immutable `f64` in **game world coordinates**, in metres, with
-//! stable [`SourceId`] identities, mirroring the DS12 `ground_query` set. Only
+//! stable [`SourceId`] identities, mirroring the prototype `ground_query` set. Only
 //! non-degenerate 3D triangles with an absolute unit geometric normal Y below
 //! `0.5` are retained, so near-vertical walls and barriers survive while flat
 //! and shallow surfaces (track, kerbs, run-off) are excluded and counted.

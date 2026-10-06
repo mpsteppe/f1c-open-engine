@@ -108,12 +108,12 @@ impl CarSpec {
             Some(WheelDrive::Rear) => {}
             Some(WheelDrive::Front) => {
                 return Err(ConfigError::new(
-                    "unsupported drivetrain WheelDrive=FRONT; DS11 supports REAR only",
+                    "unsupported drivetrain WheelDrive=FRONT; prototype supports REAR only",
                 ))
             }
             Some(WheelDrive::Four) => {
                 return Err(ConfigError::new(
-                    "unsupported drivetrain WheelDrive=FOUR; DS11 supports REAR only",
+                    "unsupported drivetrain WheelDrive=FOUR; prototype supports REAR only",
                 ))
             }
             None => {
@@ -367,7 +367,7 @@ fn finite_positive(value: Option<f64>, what: &str) -> Result<f64, ConfigError> {
     }
 }
 
-/// Reject a non-zero wheelbase override; DS11 cannot honour it.
+/// Reject a non-zero wheelbase override; prototype cannot honour it.
 fn reject_wheelbase_override(hdv: &formats_hdv::Hdv, key: &str) -> Result<(), ConfigError> {
     let Some(section) = hdv.ini.section("SUSPENSION") else {
         return Ok(());
@@ -378,7 +378,7 @@ fn reject_wheelbase_override(hdv: &formats_hdv::Hdv, key: &str) -> Result<(), Co
     let value = raw.trim().parse::<f64>().unwrap_or(f64::NAN);
     if !value.is_finite() || value != 0.0 {
         return Err(ConfigError::new(format!(
-            "HDV {key}={raw} override is unsupported in DS11 (reject rather than ignore)"
+            "HDV {key}={raw} override is unsupported in prototype (reject rather than ignore)"
         )));
     }
     Ok(())

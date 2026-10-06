@@ -3,7 +3,7 @@
 //! No Bevy or physics dependency. The input is immutable indexed triangles in
 //! **game world coordinates**, in metres, with stable source IDs and display
 //! names; the output is a deterministic nearby-height query. The rules are the
-//! DS12 prototype choices from `specs/GROUND_QUERY.md`, not a reconstruction of
+//! prototype prototype choices from `specs/GROUND_QUERY.md`, not a reconstruction of
 //! the original collision or handling model.
 //!
 //! Geometry is stored and queried in `f64`; mirroring is only a display concern.

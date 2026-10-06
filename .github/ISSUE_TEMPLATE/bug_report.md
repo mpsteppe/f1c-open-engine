@@ -3,7 +3,6 @@ name: Bug report
 about: Report a reproducible engine or parser problem
 ---
 
-**Next action:** provide steps and the result; do not attach game files or restricted evidence.
 
 - Version/commit and operating system:
 - Command and steps:

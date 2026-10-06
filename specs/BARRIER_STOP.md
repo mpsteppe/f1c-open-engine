@@ -1,17 +1,16 @@
-# Barrier stop v1 — DS14 contract
+# Barrier stop v1 — prototype contract
 
-**Next action:** implement through DS14 handoff. This is a constrained M05 collision slice.
 
 ## Goal and provenance
 
 - **Goal:** opt-in --barrier-stop prevents a simple moving car proxy from crossing selected steep visible CollTarget triangles. Stop and latch on contact; R resets.
-- **Evidence:** [scope record](../records/research/BARRIER_STOP_2026-10-06.md). Adelaide has explicit CollTarget flags and hidden timing geometry with CollTarget=True. This does not establish original collision rules.
+- **Evidence:** maintainer research notes. Adelaide has explicit CollTarget flags and hidden timing geometry with CollTarget=True. This does not establish original collision rules.
 - **Design:** proxy, mesh/face selection, collision algorithm tolerances and stop response are project choices. No original collision, damage or whole-car shape claim.
 - **Deferred:** sliding, bounce, contact impulses, damage, car-car collisions, hidden physical barriers, moving objects, gravity/suspension/tire dynamics, trigger/race logic.
 
 ## Selection and loading
 
-- Reuse per-MeshFile metadata and game-world placement from DS12. Select explicit CollTarget=True in visible (Render=True), static, non-animated, top-level, non-sky instances. HATTarget alone never selects a barrier. Ignore/count absent/false/invalid flags with existing diagnostics.
+- Reuse per-MeshFile metadata and game-world placement from prototype. Select explicit CollTarget=True in visible (Render=True), static, non-animated, top-level, non-sky instances. HATTarget alone never selects a barrier. Ignore/count absent/false/invalid flags with existing diagnostics.
 - Explicit-true visible candidates in nested/moving/animated/sky contexts are unsupported and fail in this opt-in mode. Render=False occurrences are excluded, including timing triggers; this can omit real invisible barriers and must be documented.
 - Retain only nondegenerate 3D triangles whose absolute unit geometric normal Y is **<0.5**. Horizontal/shallower triangles are excluded/count separately, including track surfaces. Both windings/sides collide; no normal-Y upward conversion needed.
 - Non-finite vertices, malformed triangle-list length, bad indices, missing/unreadable/unsupported selected mesh are named errors. Zero retained barrier triangles fails opt-in preflight. Ordinary modes unchanged.
@@ -29,10 +28,10 @@
 
 - --barrier-stop requires SCN + --car + --drive + --road-follow. Ground probe may also be supplied; follow labels win as before. Fail invalid combinations before window creation.
 - Preflight ground follower then barrier set and stationary proxy overlap at spawn; overlap fails with source and "Choose another grid or use road follow without --barrier-stop". No fallback to disabling barriers.
-- Each fixed step proposes planar/follower state as DS13. Surface loss still wins if proposal has no valid surface. If surface proposal is valid, sweep proxy from last accepted pose to proposed pose before accepting either state.
+- Each fixed step proposes planar/follower state as prototype. Surface loss still wins if proposal has no valid surface. If surface proposal is valid, sweep proxy from last accepted pose to proposed pose before accepting either state.
 - No contact: accept planar, follower and any consumed shift together. Contact/query failure: discard entire proposal (including queued shift), retain last valid pose/position/gear, speed=0/idle RPM, clear pending shifts/input/time and latch distinct **Barrier stopped** state. No t-based repositioning in this batch; stopping at previous pose is conservative.
 - Preserve Surface lost separately. Both latches block movement until R; P/focus/T/L do not clear them. Reset restores spawn state/proxy, clears latch and waits for held controls to release; paused reset stays paused.
-- Barrier integration runs at 120 Hz. No query on unchanged render frames required. Existing DS11/DS12/DS13 modes/tests stay valid. Keep last contact/source/reason for HUD/report; log only state transition, no tick spam.
+- Barrier integration runs at 120 Hz. No query on unchanged render frames required. Existing prototype/prototype/prototype modes/tests stay valid. Keep last contact/source/reason for HUD/report; log only state transition, no tick spam.
 
 ## HUD and owner behavior
 

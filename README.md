@@ -1,53 +1,50 @@
-# F1C Open Engine (working name)
+# F1C Open Engine
 
-Clean-room, F1 Challenge '99-'02 compatible engine in Rust + Bevy. Loads the
-player's own game data; ships no game assets. Owner: Matias.
-Coordinator workspace is separate from the F1
-modding workspace. Public prototype snapshot published at the owner's request.
-Independent legal clearance has not been established; no game assets or decompiled source are included.
+Help build an open-source engine compatible with F1 Challenge '99–'02 game data.
 
-Feasibility, legal blockers, token budget:
-`C:\F1Research\research\OPEN_SOURCE_REWRITE_FEASIBILITY_2026-10-06.md`
+This is an independent community project written in Rust and Bevy. It loads files from a user's own game installation and includes no game assets or original game source. It is an early prototype, not a complete replacement for the game.
 
-## Roles
+## What works
 
-- Claude: coordinator, spec writer (Team A) and QA. Reviews every DeepSeek batch.
-- DeepSeek: implementer (Team B), specs only. Rules: [CLEAN_ROOM.md](CLEAN_ROOM.md).
-- Matias: decisions, human validation, legal.
+- Read MAS archives, MTS geometry, GEN/SCN scenes, AIW grid positions and vehicle configuration files.
+- Display textured cars and tracks with lighting and a chase camera.
+- Drive a configured car with fixed-step motion, gear changes, pause and reset.
+- Query nearby ground, follow road height and tilt, and stop at selected barriers.
 
-## Reusing the F1 workspace
+Driving, road following and barrier contact are simplified prototypes. Suspension, tire dynamics, racing rules, opponents, multiplayer and original-game physics fidelity remain open work.
 
-[sources.toml](sources.toml) registers every reused F1 asset with its tier.
-`python tools/f1src.py` lists sources, finds game files, reads/extracts MAS
-entries to `%TEMP%\f1c_openengine`, and (spec writer only) queries the SDK
-knowledge base.
+## Build and test
 
-## Stage 1 objective
+Start on Windows with Rust stable and MSVC C++ build tools.
 
-**Current progression:** the original Stage 1 below is complete within its
-defined scope. DS11–DS13 motion, surface queries and kinematic road following are accepted prototypes. DS14 barrier stop passed the owner check; final review/rebuild is pending. See reviews/DS14_REVIEW_2026-10-06.md.
-See [ROADMAP.md](ROADMAP.md) for full game coverage, remaining systems, evidence
-and milestone exit gates. See [records/NEXT.md](records/NEXT.md) for the next action.
+```powershell
+cargo test --locked --workspace
+```
 
-1. `formats-mas`: read CUBEMAS4.10 archives ([spec](specs/MAS_FORMAT.md)).
-2. `formats-mts`: parse MTS models (F1C uses gMotor 1 .MTS, not GMT).
-3. `viewer`: Bevy app opens a car MAS and shows the model.
+```powershell
+cargo build --locked --release -p viewer
+```
 
-Non-goals: physics, AI, gameplay, archive writing, shipping game assets.
-Acceptance: `cargo test` green; MAS crate reads all installed archives with
-exact sizes; Matias sees a car model in the viewer.
+Tests use invented fixtures by default. Optional installation tests use F1C_GAME_DIR and skip when it is unset.
+
+For viewer commands and controls, see [the viewer guide](crates/viewer/README.md). Replace example paths with your own installation.
+
+## Help build it
+
+Read [CONTRIBUTING.md](CONTRIBUTING.md), browse [ROADMAP.md](ROADMAP.md), then open an issue describing one small change. Contributions through pull requests are welcome: format compatibility, tests, rendering, physics research, tools, documentation and accessibility.
+
+[Specifications](specs/) describe current behavior and format contracts. They document constraints and assumptions, not a claim of complete original-game fidelity.
 
 ## Layout
 
-`specs/` format specs · `handoffs/` DeepSeek work orders · `reviews/` QA
-reports · `crates/` code · `records/` status · `tools/` bridge.
+| Directory | Purpose |
+|---|---|
+| crates/ | Rust parsers, spatial queries, simulation and viewer |
+| specs/ | Format and behavior specifications |
+| .github/ | Automated checks and issue/pull-request templates |
 
-`crates/physics-drive` is the headless DS11 driving prototype (validated
-configuration, fixed-step motion, input queue); the viewer's `--drive` mode
-renders it. See `specs/DRIVE.md` and `crates/viewer/README.md`.
+## License and independence
 
-## Contributors
+Original engine code is available under **MIT OR Apache-2.0**. See [LICENSING.md](LICENSING.md). Game files and third-party material retain their own rights.
 
-Read [CONTRIBUTING.md](CONTRIBUTING.md), [CLEAN_ROOM.md](CLEAN_ROOM.md) and [ROADMAP.md](ROADMAP.md). Build/test without game files using cargo test --workspace; optional real-data tests use F1C_GAME_DIR. This Windows prototype loads assets from your own installation.
-
-Publication history is in [records/GITHUB_PUBLICATION.md](records/GITHUB_PUBLICATION.md). CI/contribution templates are prepared locally; GitHub checks have not run yet. Code license files match existing MIT OR Apache-2.0 manifests; publication/provenance gates remain to be resolved. See LICENSING.md.
+The project is not affiliated with or endorsed by the game's original developers or publishers. Independent legal clearance has not been established. Follow [CLEAN_ROOM.md](CLEAN_ROOM.md): do not submit game assets, copied code or decompiled source as engine implementation material.

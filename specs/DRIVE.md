@@ -1,6 +1,5 @@
-# Drive v1 — DS11 behaviour contract
+# Drive v1 — prototype behaviour contract
 
-**Next action:** implementer follows the DS11 handoff; owner tests motion after review.
 
 ## Goal and limits
 
@@ -15,14 +14,10 @@
 | ID | Source and tier | Supported fact |
 |---|---|---|
 | D1 | PHYSICS_FILES.md; observed game data, 2026-10-06 | Mass, wheel drive, gear settings, torque samples, rev limit, steering lock, per-wheel brakes |
-| D2 | sources.toml `game`, SeasonData/Vehicles/1994_Goodyear.tbc; observed file comments | Front/Rear labels divide tire properties; Radius is tire radius; dry grip and slip curves are separate quantities |
-| D3 | sources.toml `game`, SeasonData/Vehicles/1994_f1susp.pm; observed fields/comments | Named wheel-body positions; game axes +X left, +Y up, +Z rear |
-| R1 | sources.toml `sdk`, docs/47-engine-map-tokens-live-verified.md; original-game live A/B research | Rev-limit setting affects the running engine; engine-braking map affects coasting; EngineMap setting is inert in the inspected original |
-| R2 | sources.toml `mods`, mechanical_failures/docs/NATIVE_SIMULATION_MAP_2026-10-06.md, section 3; research summary, not independently retested here | Original limiter uses a fade band and original engine can stall |
 | K1 | [MathWorks bicycle equations](https://www.mathworks.com/help/robotics/ug/mobile-robot-kinematics-equations.html), bicycle section, read 2026-10-06 | Ideal rolling rear-axle translation and yaw rate v tan(delta)/wheelbase |
 | P1 | Coordinator design, 2026-10-06 | All prototype simplifications, bounds, timing, UI and tests below |
 
-R1/R2 are distilled behaviour only. Implementers do not open those external research sources. DS11 deliberately uses a hard positive-torque cutoff and idle/launch aid rather than the original limiter, clutch or stall behaviour. EngineMap and engine-braking-map effects are both omitted; omission of the latter changes coasting. [P1, R1, R2]
+R1/R2 are distilled behaviour only. Implementers do not open those external research sources. prototype deliberately uses a hard positive-torque cutoff and idle/launch aid rather than the original limiter, clutch or stall behaviour. EngineMap and engine-braking-map effects are both omitted; omission of the latter changes coasting. [P1, R1, R2]
 
 ## Launch and controls [P1]
 
@@ -44,7 +39,7 @@ R1/R2 are distilled behaviour only. Implementers do not open those external rese
 - **Idle:** finite 0 < low <= high < rev limit from IdleRPMLogic. Prototype idle is the arithmetic mean. No silent generic-car defaults for missing required data.
 - **Tires:** extend typed COMPOUND parsing to separate Front and Rear blocks. Read finite positive Radius from each selected compound block. Do not flatten both Radius keys into one value; leave other tire properties and curves out of scope.
 - **Brakes:** all four finite non-negative BrakeTorque values, at least one positive. Front corners use front radius, rear corners use rear radius.
-- **Geometry:** read PM body positions named fl_wheel, fr_wheel, rl_wheel, rr_wheel, case-insensitive. Average each axle's X/Z. Wheelbase L = rear average Z minus front average Z, finite positive. Positive LeftWheelBase/RightWheelBase overrides are unsupported in DS11: reject rather than silently ignore. Absent/zero overrides use PM geometry.
+- **Geometry:** read PM body positions named fl_wheel, fr_wheel, rl_wheel, rr_wheel, case-insensitive. Average each axle's X/Z. Wheelbase L = rear average Z minus front average Z, finite positive. Positive LeftWheelBase/RightWheelBase overrides are unsupported in prototype: reject rather than silently ignore. Absent/zero overrides use PM geometry.
 - **State:** finite spawn position/yaw; scalar forward speed is non-negative. Reject non-finite numeric inputs and keep outputs finite. Never panic on a bad car.
 
 ## Coordinates and reference point [D3, K1, P1]

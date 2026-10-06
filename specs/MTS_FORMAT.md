@@ -2,9 +2,9 @@
 
 v1.2 (2026-10-06): geometry header offset 256 = mesh position (car space).
 
-v1.1 (2026-10-06): geometry magic is 14 bytes, not 16 (DS02 finding); Z3DM entries added.
+v1.1 (2026-10-06): geometry magic is 14 bytes, not 16 (prototype finding); Z3DM entries added.
 
-Provenance: Team A. Field sizes and meanings come from black-box statistics over
+Provenance: researchers. Field sizes and meanings come from black-box statistics over
 the player's own install (49,283 MTS entries in 685 MAS archives, 2026-10-06).
 Material/texture-stage record sizes and the geometry count/offset pairs were
 cross-checked against spec-tier knowledge; only sizes and meanings are recorded
@@ -122,7 +122,7 @@ Every triangle of every group appears in its face set (163,312 groups checked).
 | 12 | 12 | normal 3 x f32 (unit length) | VERIFIED |
 | 24 | 4 | color u32, Direct3D ARGB | INFERRED |
 | 28 | 4 | u32 | UNKNOWN (likely specular color) |
-| 32 | 8 | uv0 2 x f32; values leave 0..1, renderer must use wrap (repeat) addressing | VERIFIED (owner visual, DS04) |
+| 32 | 8 | uv0 2 x f32; values leave 0..1, renderer must use wrap (repeat) addressing | VERIFIED (owner visual, prototype) |
 | 40 | 8 | uv1 2 x f32 | INFERRED |
 
 Coordinate system: Direct3D left-handed, Y up. Viewers convert by negating Z

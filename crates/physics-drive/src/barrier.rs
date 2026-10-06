@@ -1,6 +1,6 @@
-//! DS14 barrier stop: one sphere proxy swept at the road-follow mesh.
+//! prototype barrier stop: one sphere proxy swept at the road-follow mesh.
 //!
-//! This is the DS14 prototype from `specs/BARRIER_STOP.md`, on top of the DS13
+//! This is the prototype prototype from `specs/BARRIER_STOP.md`, on top of the prototype
 //! road follower and the headless barrier geometry. The proxy is a single
 //! `0.75 m` sphere centred `0.75 m` above the road-follow mesh origin; each
 //! fixed step sweeps it from the last accepted centre to the proposed centre.

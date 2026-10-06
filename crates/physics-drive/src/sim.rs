@@ -1,6 +1,6 @@
 //! Fixed-step, double-precision rear-wheel-drive motion model.
 //!
-//! This is the DS11 prototype from `specs/DRIVE.md`: a flat-ground, no-collision
+//! This is the prototype prototype from `specs/DRIVE.md`: a flat-ground, no-collision
 //! point model of one car. It is deliberately not a reconstruction of the
 //! original solver; the constants are project choices. Everything is headless
 //! and independent of Bevy so the motion can be tested on its own.
@@ -384,7 +384,7 @@ impl Session {
         }
     }
 
-    /// Attach (or replace) the DS13 road follower.
+    /// Attach (or replace) the prototype road follower.
     pub fn set_road_follow(&mut self, follower: RoadFollower) {
         self.follower = Some(follower);
     }
@@ -394,7 +394,7 @@ impl Session {
         self.follower.as_ref()
     }
 
-    /// Attach the DS14 barrier stop; it is only queried in road-follow mode.
+    /// Attach the prototype barrier stop; it is only queried in road-follow mode.
     pub fn set_barrier_stop(&mut self, barrier: BarrierStop) {
         self.barrier = Some(barrier);
     }
@@ -462,7 +462,7 @@ impl Session {
         self.advance_with(wall, held, None)
     }
 
-    /// Advance by `wall` seconds with the DS13 road follower, querying `set`
+    /// Advance by `wall` seconds with the prototype road follower, querying `set`
     /// once per fixed step. The follower must already be set with
     /// [`Session::set_road_follow`].
     pub fn advance_with_ground(&mut self, wall: f64, held: HeldInput, set: &GroundQuerySet) -> u32 {

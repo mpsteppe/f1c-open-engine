@@ -1,6 +1,6 @@
 //! Headless runtime validation: load a real car and validate it for driving.
 //!
-//! Skip when `F1C_GAME_DIR` is unset. When set, the known DS11 acceptance car
+//! Skip when `F1C_GAME_DIR` is unset. When set, the known prototype acceptance car
 //! `1994_Ferrari28.veh` is loaded and validated; a missing car is reported as
 //! skipped rather than failing, so the suite still passes on a machine without
 //! the game installed.

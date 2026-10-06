@@ -1,7 +1,6 @@
 # MAS archive format (CUBEMAS4.10) — spec v1
 
 Provenance: black-box observation of the player's own installed files
-(685 archives, 75,578 entries, 2026-10-06), via `tools/f1src.py`. No decompiled
 code used. Status: FACT for fields marked verified; others UNKNOWN.
 
 All integers little-endian u32.

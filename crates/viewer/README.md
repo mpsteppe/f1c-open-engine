@@ -37,7 +37,7 @@ cargo run -p viewer -- "C:\F1Research\F1 Challenge V10\SeasonData\Circuits\Austr
 
 The yaw sign is inferred; press **R** to flip it and print `Yaw sign: +1/-1`.
 
-Drive mode (DS11 prototype): add `--drive` to the car-on-track command. The car
+Drive mode (prototype prototype): add `--drive` to the car-on-track command. The car
 is validated against its physics files, then becomes a flat-ground car you can
 accelerate, brake, steer and shift. The window opens only after validation
 passes; a missing grid, unreadable car or unsupported drivetrain stops with a
@@ -61,7 +61,7 @@ cargo run --release -p viewer -- "C:\F1Research\F1 Challenge V10\SeasonData\Circ
 - **T** textures, **L** lighting, **Esc** quit.
 - HUD shows speed (km/h), gear, RPM, pedals, pause state and the prototype label.
 
-### Ground probe (DS12 prototype)
+### Ground probe (prototype prototype)
 
 Add `--ground-probe` (needs the track `.SCN`, `--car` and `--drive`) to load the
 track's explicit `HATTarget=True` surfaces and query the nearby road height under
@@ -81,7 +81,7 @@ cargo run --release -p viewer -- "C:\F1Research\F1 Challenge V10\SeasonData\Circ
   coverage. Reset restores the grid reference; pause keeps showing the current
   result; texture/lighting toggles keep the index.
 
-### Road follow (DS13 prototype)
+### Road follow (prototype prototype)
 
 Add `--road-follow` (needs the track `.SCN`, `--car` and `--drive`) to make the car
 follow the height and tangent plane of the nearby `HATTarget` surface under its
@@ -93,11 +93,11 @@ cargo run --release -p viewer -- "C:\F1Research\F1 Challenge V10\SeasonData\Circ
 ```
 
 - **Road-follow prototype — no suspension or collisions.** The car's height and
-  tilt follow the surface; horizontal DS11 motion is unchanged.
+  tilt follow the surface; horizontal prototype motion is unchanged.
 - Preflight selects the same surfaces as `--ground-probe`, requires a hit within
   2 m of the spawn rear axle and prints the source, height, normal and grid
   difference once.
-- Each 120 Hz step proposes the DS11 step, queries the surface under the
+- Each 120 Hz step proposes the prototype step, queries the surface under the
   proposed rear axle using the **last accepted height** as reference, and accepts
   it only when the height changes by at most 0.25 m. A missing hit, a query
   error or a larger jump rejects the step, stops the car and latches
@@ -107,7 +107,7 @@ cargo run --release -p viewer -- "C:\F1Research\F1 Challenge V10\SeasonData\Circ
 - The HUD shows the surface height, source mesh, candidate count and
   following/lost state on a dark panel. No full-lap acceptance claim.
 
-### Barrier stop (DS14 prototype)
+### Barrier stop (prototype prototype)
 
 Add `--barrier-stop` (needs the track `.SCN`, `--car`, `--drive` and
 `--road-follow`) to stop a one-sphere car proxy at selected steep visible
