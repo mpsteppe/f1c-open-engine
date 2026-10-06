@@ -1,0 +1,30 @@
+[package]
+name = "viewer"
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+bevy = "=0.19.1"
+formats-aiw = { path = "../formats-aiw" }
+formats-gen = { path = "../formats-gen" }
+formats-hdv = { path = "../formats-hdv" }
+formats-mas = { path = "../formats-mas" }
+formats-mts = { path = "../formats-mts" }
+formats-scn = { path = "../formats-scn" }
+ground-query = { path = "../ground-query" }
+physics-drive = { path = "../physics-drive" }
+image = { version = "0.25", default-features = false, features = ["bmp", "tga", "jpeg"] }
+
+[dev-dependencies]
+formats-scn = { path = "../formats-scn" }
+formats-hdv = { path = "../formats-hdv" }
+physics-drive = { path = "../physics-drive" }
+
+[lib]
+name = "viewer"
+path = "src/lib.rs"
+
+[[bin]]
+name = "viewer"
+path = "src/main.rs"

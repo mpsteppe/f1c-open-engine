@@ -1,0 +1,73 @@
+# Registry of F1 workspace material this project reuses. Read-only. Never copy
+# game data or tainted material into this workspace.
+# tier: data     = player's game files; read at run time, never committed
+#       clean    = first-party records/tools/public facts; anyone may read
+#       spec     = decompile-derived; ONLY the spec writer (Claude, Team A) reads it
+#       forbidden= never read (secrets)
+
+f1_root = 'C:\F1Research'
+
+[[source]]
+id = "game"
+tier = "data"
+path = 'C:\F1Research\F1 Challenge V10'
+note = "Active install: MAS archives, GDB/VEH/HDV/AIW, SeasonData"
+
+[[source]]
+id = "game_clean"
+tier = "data"
+path = 'C:\GameReferences\F1 Challenge V10_clean'
+note = "Clean reference install (read-only, Q19)"
+
+[[source]]
+id = "isi_tech_doc"
+tier = "clean"
+path = 'C:\F1Research\Image Space Inc. F1C Technical Documentation.doc'
+note = "ISI public modding documentation"
+
+[[source]]
+id = "research"
+tier = "clean"
+path = 'C:\F1Research\research'
+note = "Shared research records; check each file for decompile content before passing on"
+
+[[source]]
+id = "live_telemetry"
+tier = "clean"
+path = 'C:\F1Research\f1c_ida_decompiled\tools\sdk\F1C_MEMORY_MCP.md'
+note = "f1c-memory MCP: black-box observation of the running original (validation reference)"
+
+[[source]]
+id = "sdk"
+tier = "spec"
+path = 'C:\F1Research\f1c_ida_decompiled'
+note = "Front door: python tools/f1c_mod.py (start, evidence-query, inspect)"
+
+[[source]]
+id = "findings"
+tier = "spec"
+path = 'C:\F1Research\f1c_ida_decompiled\findings.jsonl'
+note = "816+ tiered findings"
+
+[[source]]
+id = "mechanics_docs"
+tier = "spec"
+path = 'C:\F1Research\f1c_ida_decompiled\docs'
+note = "Subsystem architecture (camera, AIW, AI brain, pit, championship)"
+
+[[source]]
+id = "mods"
+tier = "spec"
+path = 'C:\F1Research\development\mods'
+note = "Mod source/evidence; often contains addresses"
+
+[[source]]
+id = "mas_studio_research"
+tier = "spec"
+path = 'C:\F1Research\development\mas_studio\research'
+note = "Decompiled MAStudio2002"
+
+[[source]]
+id = "secrets"
+tier = "forbidden"
+path = 'C:\F1Research\api1.txt'

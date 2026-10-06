@@ -1,0 +1,6 @@
+target/
+__pycache__/
+*.mas
+*.mts
+*.bmp
+*.tga

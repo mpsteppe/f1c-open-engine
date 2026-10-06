@@ -1,0 +1,16 @@
+[workspace]
+members = [
+    "crates/formats-aiw",
+    "crates/formats-gen",
+    "crates/formats-hdv",
+    "crates/formats-mas",
+    "crates/formats-mts",
+    "crates/formats-scn",
+    "crates/ground-query",
+    "crates/physics-drive",
+    "crates/viewer",
+]
+resolver = "2"
+
+[profile.dev.package."*"]
+opt-level = 3
